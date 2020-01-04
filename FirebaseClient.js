@@ -8,6 +8,7 @@ const Logger = require('./Logger');
 
 module.exports = class FirebaseClient {
   settingsCollection = null;
+  tracksCollection = null;
   votesCollection = null;
   spotifyAuthDoc = null;
   l = null;
@@ -24,11 +25,10 @@ module.exports = class FirebaseClient {
     const db = admin.firestore();
 
     this.votesCollection = db.collection('votes');
+    this.tracksCollection = db.collection('tracks');
     this.settingsCollection = db.collection('settings');
     this.spotifyAuthDoc = this.settingsCollection.doc('spotify');
   }
-
-  addVote = data => this.votesDoc.add(data);
 
   getSpotifyAuth = async () => {
     const auth = await this.spotifyAuthDoc.get();
@@ -40,41 +40,47 @@ module.exports = class FirebaseClient {
       );
     }
   };
+  getTrack = async trackId => {
+    const track = await this.tracksCollection.doc(trackId).get();
+    if (track.exists) {
+      return track.data();
+    } else {
+      return null;
+    }
+  };
 
-  setSpotifyAuth = async (refreshToken, accessToken) => {
-    const auth = await this.getSpotifyAuth();
-    await this.spotifyAuthDoc.set({
-      ...auth,
-      refreshToken,
-      accessToken,
+  setSpotifyAuth = auth => this.spotifyAuthDoc.set(auth);
+
+  setSong = (id, track) => this.tracksCollection.doc(id).set(track);
+
+  incrementVote = async vote => {
+    const res = await this.votesCollection.doc('' + vote).get();
+    let count = 0;
+    if (res.exists) {
+      count = res.data().count;
+    }
+    count = count + 1;
+    await this.votesCollection.doc('' + vote).set({ vote, count });
+  };
+
+  getAllVotes = async () => {
+    const resp = await this.votesCollection.get();
+    const ret = [];
+    resp.forEach(doc => {
+      ret.push(doc.data());
     });
+    return ret;
+  };
+  getAllTracks = async () => {
+    const resp = await this.tracksCollection.get();
+    const ret = [];
+    resp.forEach(doc => {
+      ret.push(doc.data());
+    });
+    return ret;
+  };
+
+  getCurrentStats = async () => {
+    const allVotes = this.getAllVotes();
   };
 };
-
-// const main = async () => {
-//   try {
-//     const spotify = new Spotify({
-//       clientId: spotifyClientId,
-//       clientSecret: spotifyClientSecret,
-//     });
-//     const data = await spotify.clientCredentialsGrant();
-//     spotify.setAccessToken(data.body['access_token']);
-
-//     console.log(data.body['access_token']);
-//     console.log(await spotify.getMe());
-
-//     let docRef = collection.doc('votes');
-
-//     docRef.set({
-//       song: 'New Day',
-//       last: 'Karnivool',
-//       weight: 102,
-//     });
-//     snapshot = await collection.get();
-//     console.log(snapshot);
-//   } catch (e) {
-//     console.error(e);
-//   }
-// };
-
-// main();
