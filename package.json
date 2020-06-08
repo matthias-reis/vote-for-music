@@ -19,6 +19,7 @@
   },
   "scripts": {
     "vote": "node ./vote.js",
-    "bulk": "node ./bulk.js"
+    "bulk": "node ./bulk.js",
+    "refresh": "node ./refresh.js"
   }
 }

@@ -40,7 +40,7 @@ module.exports = class FirebaseClient {
       );
     }
   };
-  getTrack = async trackId => {
+  getTrack = async (trackId) => {
     const track = await this.tracksCollection.doc(trackId).get();
     if (track.exists) {
       return track.data();
@@ -49,11 +49,11 @@ module.exports = class FirebaseClient {
     }
   };
 
-  setSpotifyAuth = auth => this.spotifyAuthDoc.set(auth);
+  setSpotifyAuth = (auth) => this.spotifyAuthDoc.set(auth);
 
   setSong = (id, track) => this.tracksCollection.doc(id).set(track);
 
-  incrementVote = async vote => {
+  incrementVote = async (vote) => {
     const res = await this.votesCollection.doc('' + vote).get();
     let count = 0;
     if (res.exists) {
@@ -63,10 +63,14 @@ module.exports = class FirebaseClient {
     await this.votesCollection.doc('' + vote).set({ vote, count });
   };
 
+  setVote = async (vote, count) => {
+    await this.votesCollection.doc('' + vote).set({ vote, count });
+  };
+
   getAllVotes = async () => {
     const resp = await this.votesCollection.get();
     const ret = [];
-    resp.forEach(doc => {
+    resp.forEach((doc) => {
       ret.push(doc.data());
     });
     return ret;
@@ -74,7 +78,7 @@ module.exports = class FirebaseClient {
   getAllTracks = async () => {
     const resp = await this.tracksCollection.get();
     const ret = [];
-    resp.forEach(doc => {
+    resp.forEach((doc) => {
       ret.push(doc.data());
     });
     return ret;
