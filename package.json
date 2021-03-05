@@ -1,25 +1,63 @@
 {
   "name": "vote-for-music",
   "version": "1.0.0",
-  "description": "music voting service with several clients",
-  "main": "index.js",
+  "description": "music voting service with electron client",
+  "homepage": "./",
+  "main": "src/ele",
   "repository": "git@github.com:matthias-reis/vote-for-music.git",
   "author": "Matthias Reis <matthias.reis@xing.com>",
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/styled-components": "^5.1.7",
     "chalk": "^3.0.0",
+    "electron": "^12.0.0",
     "express": "^4.17.1",
     "firebase": "^7.5.0",
     "firebase-admin": "^8.8.0",
     "firebase-functions": "^3.3.0",
     "mathjs": "^6.2.5",
     "open": "^7.0.0",
-    "spotify-web-api-node": "^4.0.0"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.3",
+    "spotify-web-api-node": "^4.0.0",
+    "styled-components": "^5.2.1",
+    "typescript": "^4.1.2",
+    "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "compile": "tsc",
+    "watch": "tsc --watch",
+    "dev": "yarn watch & electron .",
+    "ele": "electron .",
+    "start": "yarn compile && react-scripts build && electron .",
+    "react-start": "BROWSER=none react-scripts start",
+    "electron-start": "ELECTRON_START_URL=http://localhost:3000 node ./start-electron",
+    "build": "react-scripts build",
     "vote": "node ./vote.js",
     "bulk": "node ./bulk.js",
     "refresh": "node ./refresh.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      "last 1 chrome version"
+    ],
+    "development": [
+      "last 1 chrome version"
+    ]
   }
 }

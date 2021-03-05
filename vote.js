@@ -39,17 +39,17 @@ const main = async () => {
 
     // get overall vote average
     const currentTrackAverage =
-      votes.map(v => v.vote).reduce((p, n) => p + parseInt(n), 0) /
+      votes.map((v) => v.vote).reduce((p, n) => p + parseInt(n), 0) /
       votes.length;
     const dl = new DataLayer(firebaseClient);
     await dl.init();
 
     // print out results for song
-    l.log(`(${votes.map(v => v.vote).join(', ')})`);
+    l.log(`(${votes.map((v) => v.vote).join(', ')})`);
     l.log(`current vote: ${l.b(vote)}`);
     l.log(
       `current average: ${l.b(currentTrackAverage)} in ${l.b(
-        vote.length
+        votes.length
       )} votes`
     );
     l.log(`overallvotes cast so far: ${l.b(dl.getVotesCount())}`);
@@ -84,7 +84,7 @@ const main = async () => {
           presentation.push({ evaluation: allEvaluations[i + 1], i: i + 1 });
         }
       });
-    presentation.forEach(item => {
+    presentation.forEach((item) => {
       const str = `${item.i + 1}.   ${item.evaluation.value.toFixed(1)} : ${
         item.evaluation.trackId
       }`;

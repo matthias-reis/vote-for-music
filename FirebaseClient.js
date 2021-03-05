@@ -2,7 +2,7 @@
 // require('firebase/firestore');
 
 const admin = require('firebase-admin');
-const serviceAccount = require('../vote-for-music.json');
+const serviceAccount = require('../../vote-for-music-credentials.json');
 
 const Logger = require('./Logger');
 
