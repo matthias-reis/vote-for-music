@@ -2,7 +2,7 @@ const express = require('express');
 const open = require('open');
 const Spotify = require('spotify-web-api-node');
 
-const Logger = require('./Logger');
+const Logger = require('./logger');
 
 const scopes = ['user-read-currently-playing'];
 
@@ -122,7 +122,7 @@ module.exports = class SpotifyClient {
         .map(({ name, artists, album, preview_url }) => ({
           title: name,
           album: album.name,
-          artist: artists.map(i => i.name)[0],
+          artist: artists.map((i) => i.name)[0],
           url: preview_url,
         }))
         .filter(

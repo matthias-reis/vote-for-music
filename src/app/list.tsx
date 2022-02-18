@@ -1,19 +1,27 @@
 import styled from 'styled-components';
-import { Entry } from './entry';
+import { FC } from 'react';
+import { Entry, Ellipsis } from './entry';
+import type { EntryList, ListItem } from '.';
 
-export const List = () => (
+export const List: FC<{
+  entries: EntryList;
+  onEntryClick: (trackId: string) => void;
+}> = ({ entries, onEntryClick }) => (
   <Wrapper>
     <Entries>
-      <Entry />
-      <Entry />
-      <Entry />
-      <Entry />
-      <Entry />
-      <Entry />
-      <Entry />
-      <Entry />
-      <Entry />
-      <Entry />
+      {entries.map((item: ListItem, i: number) => {
+        if (item.type === 'ellipsis') {
+          return <Ellipsis key={i} />;
+        } else {
+          return (
+            <Entry
+              onClick={() => onEntryClick(item.trackId)}
+              entry={item}
+              key={i}
+            />
+          );
+        }
+      })}
     </Entries>
   </Wrapper>
 );

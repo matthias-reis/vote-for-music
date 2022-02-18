@@ -1,7 +1,7 @@
-const FirebaseClient = require('./FirebaseClient');
-const SpotifyClient = require('./SpotifyClient');
-const DataLayer = require('./DataLayer');
-const Logger = require('./Logger');
+const FirebaseClient = require('../be/firebase-client');
+const SpotifyClient = require('../be/spotify-client');
+const DataLayer = require('../be/data-layer');
+const Logger = require('../be/logger');
 
 const main = async () => {
   const l = new Logger('vote');

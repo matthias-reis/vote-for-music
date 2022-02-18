@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-size: 18px;
-    font-family: "Dosis", sans-serif;
+    font-family: "NeoTech", sans-serif;
     font-weight: 250;
   }
 `;

@@ -1,10 +1,7 @@
-// const firebase = require('firebase');
-// require('firebase/firestore');
-
 const admin = require('firebase-admin');
-const serviceAccount = require('../../vote-for-music-credentials.json');
+const serviceAccount = require('../../../../vote-for-music-credentials.json');
 
-const Logger = require('./Logger');
+const Logger = require('./logger');
 
 module.exports = class FirebaseClient {
   settingsCollection = null;

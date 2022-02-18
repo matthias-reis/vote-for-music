@@ -1,21 +1,22 @@
 const net = require('net');
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
+const Logger = require('../be/logger');
 
 process.env.ELECTRON_START_URL = `http://localhost:3000`;
 
 const client = new net.Socket();
-
 let startedElectron = false;
+const l = new Logger('bootstrap');
+
 const tryConnection = () => {
+  l.log('bootstrapping VfM');
   client.connect({ port: 3000 }, () => {
     client.end();
     if (!startedElectron) {
-      console.log('starting electron');
+      l.log('launching VfM electron process');
       startedElectron = true;
-      exec('yarn ele', (e, so, se) => {
-        e && console.error(e);
-        so && console.log(so);
-        se && console.log(se);
+      spawn('yarn', ['ele'], {
+        stdio: [process.stdin, process.stdout, process.stderr],
       });
     }
   });

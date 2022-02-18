@@ -1,4 +1,5 @@
 const { mean, std } = require('mathjs');
+
 module.exports = class DataLayer {
   constructor(firebaseClient) {
     this.firebaseClient = firebaseClient;
@@ -11,7 +12,7 @@ module.exports = class DataLayer {
     this.deviation = deviation;
   };
 
-  calculateStats = votes => {
+  calculateStats = (votes) => {
     const votesArr = votes.reduce((res, { vote, count }) => {
       res = [...res, ...Array(count).fill(parseInt(vote))];
       return res;
@@ -23,13 +24,13 @@ module.exports = class DataLayer {
     return { average, deviation };
   };
 
-  evaluateSong = songValue =>
+  evaluateSong = (songValue) =>
     100 + (15 * (songValue - this.average)) / this.deviation;
 
-  evaluateSongs = songs =>
-    songs.map(song => {
+  evaluateSongs = (songs) =>
+    songs.map((song) => {
       const currentTrackAverage =
-        song.votes.map(v => v.vote).reduce((p, n) => p + parseInt(n), 0) /
+        song.votes.map((v) => v.vote).reduce((p, n) => p + parseInt(n), 0) /
         song.votes.length;
       return {
         value: this.evaluateSong(currentTrackAverage),
@@ -44,5 +45,5 @@ module.exports = class DataLayer {
     }, 0);
 };
 
-module.exports.getTrackId = track =>
+module.exports.getTrackId = (track) =>
   `${track.artist} - ${track.title}`.replace(/\//g, '-');

@@ -42,7 +42,7 @@ const Input = styled.input`
   height: ${HEIGHT}px;
   color: #fff;
   font-size: 24px;
-  font-family: 'Dosis', sans-serif;
+  font-family: 'NeoTech', sans-serif;
 
   &:focus {
     outline: 0;

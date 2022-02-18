@@ -57,7 +57,7 @@ const Input = styled.input`
   width: ${HEIGHT}px;
   color: #fff;
   font-size: 36px;
-  font-family: 'Dosis', sans-serif;
+  font-family: 'NeoTech', sans-serif;
   text-align: center;
 
   &:focus {
